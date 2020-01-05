@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, Animated, Dimensions, StyleSheet } from 'react-native';
 
-const { height: HEIGHT } = Dimensions.get('window');
-const HEADER_HEIGHT = HEIGHT / 3;
+const { height: HEIGHT } = Dimensions.get('screen');
+const HEADER_HEIGHT = HEIGHT / 6;
 const BODY_HEIGHT = HEIGHT / 2;
-const BUTTON_HEIGHT = HEADER_HEIGHT * 2;
+const BUTTON_HEIGHT = HEIGHT - HEADER_HEIGHT;
 
 function Default({ title }) {
   return (
-    <View style={s.flex}>
+    <View style={[s.flex, { justifyContent: 'center', alignItems: 'center' }]}>
       <Text>{title}</Text>
     </View>
   );
@@ -19,20 +19,20 @@ export default function App() {
   React.useEffect(() => {
     Animated.timing(opacity, {
       toValue: 1,
-      duration: 2500,
+      duration: 3000,
       useNativeDriver: true,
     }).start();
   }, []);
 
   const transitionHeader = opacity.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, HEADER_HEIGHT],
+    outputRange: [0, HEADER_HEIGHT / 2],
     extrapolate: 'clamp',
   });
 
   const transitionBody = opacity.interpolate({
     inputRange: [0, 1],
-    outputRange: [HEIGHT, BODY_HEIGHT],
+    outputRange: [HEIGHT, BODY_HEIGHT / 2],
     extrapolate: 'clamp',
   });
 
@@ -43,12 +43,12 @@ export default function App() {
   });
 
   return (
-    <View style={s.flex}>
+    <View style={[s.flex, { backgroundColor: 'grey' }]}>
       <Animated.View
         style={[
-          s.flex,
-          StyleSheet.absoluteFill,
           {
+            ...StyleSheet.absoluteFill,
+            height: HEADER_HEIGHT,
             opacity,
             transform: [{ translateY: transitionHeader }],
           },
@@ -57,19 +57,21 @@ export default function App() {
       </Animated.View>
       <Animated.View
         style={[
-          StyleSheet.absoluteFill,
           {
+            backgroundColor: 'red',
+            ...StyleSheet.absoluteFill,
+            height: BODY_HEIGHT,
             opacity,
-            transform: [{ translateY: transitionBody }],
+            top: BODY_HEIGHT/2
           },
         ]}>
         <Default title={'Body'} />
       </Animated.View>
       <Animated.View
         style={[
-          s.flex,
-          StyleSheet.absoluteFill,
           {
+            ...StyleSheet.absoluteFill,
+            height: HEIGHT - BUTTON_HEIGHT,
             opacity,
             transform: [{ translateY: transitionButton }],
           },
