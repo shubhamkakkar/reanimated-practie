@@ -12,10 +12,10 @@ const { width } = Dimensions.get('screen');
 export default function ToggleMasked() {
   const [toggleTrue, setToggleTrue] = React.useState(true);
   const sizeMasked = width / 2 - 20;
-  const opacity = new Animated.Value(toggleTrue ? 1 : 0);
+  const opacity = new Animated.Value(toggleTrue ? 0 : 1);
   React.useEffect(() => {
     Animated.timing(opacity, {
-      toValue: toggleTrue ? 0 : 1,
+      toValue: toggleTrue ? 1 : 0,
       useNativeDriver: true,
       duration: 500,
     }).start();
@@ -49,9 +49,8 @@ export default function ToggleMasked() {
                 borderWidth: 1,
                 marginHorizontal: 20,
                 borderRadius: 20,
-                zIndex: 10000,
               }}>
-              <Text>title { toggleTrue ? 'yes' : 'no'}</Text> // DYNAMIC TEXT
+              <Text>title {toggleTrue ? 'yes' : 'no'} </Text>
               <Text>tile B</Text>
             </View>
           }>
