@@ -51,7 +51,7 @@ export default function ToggleMasked() {
                 borderRadius: 20,
                 zIndex: 10000,
               }}>
-              <Text style={{ color: 'blue' }}>title A</Text>
+              <Text>title { toggleTrue ? 'yes' : 'no'}</Text> // DYNAMIC TEXT
               <Text>tile B</Text>
             </View>
           }>
